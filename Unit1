@@ -5,6 +5,7 @@ local nameToNumber = {
     ["Grim Wow"] = 14,
     ["Geno"] = 28,
     ["Shinzi"] =33,
+    ["Pickleo"] =34,
 }
 
 local Players = game:GetService("Players")
