@@ -1,0 +1,66 @@
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
+
+local Window = OrionLib:MakeWindow({
+    Name = "TEST HUB",
+    HidePremium = false,
+    IntroText = "TEST HUB",
+    SaveConfig = true,
+    ConfigFolder = "TEST HUB"
+})
+
+local Tab = Window:MakeTab({
+    Name = "Gameplay",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local functionsSource, functions
+local success, errorMessage = pcall(function()
+    functionsSource = game:HttpGet('https://raw.githubusercontent.com/Nicholas19x/Avr/main/Auto%20upgrade')
+    functions = loadstring(functionsSource)()
+end)
+
+if not success then
+    warn("Error loading functions: " .. errorMessage)
+else
+    local isRunning = false
+    local looping = false
+
+    Tab:AddToggle({
+        Name = "Enable Auto Upgrade",
+        Default = false,
+        Callback = function(value)
+            isRunning = value
+
+            if isRunning then
+                if functions and functions.autoUpgradeLoop then
+                    spawn(function()
+                        functions.autoUpgradeLoop()
+                    end)
+                else
+                    warn("autoUpgradeLoop function not found.")
+                end
+            end
+        end
+    })
+
+    Tab:AddToggle({
+        Name = "Auto Next",
+        Default = false,
+        Callback = function(value)
+            looping = value
+
+            if looping then
+                spawn(function()
+                    while looping do
+                        local args = {
+                            [1] = "Next"
+                        }
+                        game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                        wait(1)
+                    end
+                end)
+            end
+        end
+    })
+end
