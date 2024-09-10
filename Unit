@@ -1,0 +1,38 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local nameToNumber = {
+    ["Roku Dark"] = 11,
+    Itochi = 10,
+}
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local worldModel = player.PlayerGui:WaitForChild("HUD"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
+
+local function createArgs(numberValue, position)
+    return {
+        [1] = "Render",
+        [2] = {
+            [1] = "Units",
+            [2] = numberValue,
+            [3] = position,
+            [4] = 0
+        }
+    }
+end
+
+local positions = {
+    Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
+    Vector3.new(135.00, 9.00, 123.00),
+    Vector3.new(140.00, 10.00, 125.00)
+}
+
+for i, child in pairs(worldModel:GetChildren()) do
+    local name = child.Name
+    local numberValue = nameToNumber[name]
+    
+    if numberValue then
+        local position = positions[i] or Vector3.new(0, 0, 0)
+        local args = createArgs(numberValue, position)
+        game:GetService("ReplicatedStorage").Networking.UnitEvent:FireServer(unpack(args))
+    end
+end
