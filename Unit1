@@ -4,6 +4,8 @@ local nameToNumber = {
     ["Itochi"] = 10,
     ["Grim Wow"] = 14,
     ["Geno"] = 28,
+    ["Alligator"] = 31,
+    ["Kinnua"] = 32,
     ["Shinzi"] =33,
     ["Pickleo"] =34,
 }
