@@ -1,14 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local nameToNumber = {
-    ["Roku Dark"] = 11,
-    ["Itochi"] = 10,
-    ["Grim Wow"] = 14,
-    ["Geno"] = 28,
-    ["Alligator"] = 31,
-    ["Kinnua"] = 32,
-    ["Shinzi"] =33,
-    ["Pickleo"] =34,
-}
+local nameToNumber = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/UD"))()
+    
 
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
