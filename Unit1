@@ -2,6 +2,9 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 local nameToNumber = {
     ["Roku Dark"] = 11,
     ["Itochi"] = 10,
+    ["Grim Wow"] = 14,
+    ["Geno"] = 28,
+    ["Shinzi"] =33,
 }
 
 local Players = game:GetService("Players")
