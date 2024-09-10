@@ -1,0 +1,28 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local unitsFolder = game:GetService("Workspace"):FindFirstChild("Units")
+
+local function sendUnitNames()
+    if unitsFolder then
+        for _, item in pairs(unitsFolder:GetChildren()) do
+            local objectName = item.Name
+            local args = {"Upgrade", objectName}
+            ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(args))
+            wait(0.1)
+        end
+
+        local upgradeEventArgs = {"UpgradeAll"}
+        ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
+    end
+end
+
+local function autoUpgradeLoop()
+    while true do
+        sendUnitNames()
+        wait(1)
+    end
+end
+
+return {
+    sendUnitNames = sendUnitNames,
+    autoUpgradeLoop = autoUpgradeLoop
+}
