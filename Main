@@ -186,3 +186,12 @@ game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unp
 
   	end    
 })
+local Tab = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddButton({
+	Name = "RedeemCode",
+	Callback = function()
