@@ -186,18 +186,3 @@ game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unp
 
   	end    
 })
-
-local Tab = Window:MakeTab({
-	Name = "Misc",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-Tab:AddButton({
-	Name = "Redeemcode",
-	Callback = function()
-local scriptURL = "https://raw.githubusercontent.com/Nicholas19x/Avr/main/CODE"
-local script = game:HttpGet(scriptURL)
-local executeScript = loadstring(script)
-executeScript()
-}
