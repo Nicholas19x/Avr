@@ -195,7 +195,28 @@ GameplayTab:AddToggle({
         end
     end
 })
+    Name = "Auto Reply",
+    Default = false,
+    Callback = function(value)
+        isAutoReplyActive = value
+        if isAutoReplyActive then
+            spawn(function()
+                while isAutoReplyActive do
+                    local args = { [1] = "Reply" }
+                    local success, errorMessage = pcall(function()
+                        ReplicatedStorage.Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                    end)
 
+                    if not success then
+                        warn("Error during Auto Reply: " .. errorMessage)
+                    end
+
+                    wait(1)
+                end
+            end)
+        end
+    end
+})
 MiscTab:AddButton({
     Name = "Summonx10",
     Callback = function()
