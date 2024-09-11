@@ -10,11 +10,13 @@ return {
     ["Pickleo"] = 34,
     ["Sprintwagon"] = 35,
     ["Ichiga"] = 36,
-    ["Joe"] = 37
+    ["Joe"] = 37,
     ["Jon"] = 38,
     ["Luffo"] = 39,
-    ["Noruto"] = 40
+    ["Noruto"] = 40,
     ["Roku"] = 41,
+    ["Rukio"] = 42,
     ["Sanjo"] = 43,
+    ["Sosuke"] = 44,
     ["Vogita" = 45,
 }
