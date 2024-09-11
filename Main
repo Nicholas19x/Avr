@@ -131,7 +131,7 @@ end)
 
 
 local isReplyRunning = false
-local isNextRunning = false
+local isntRunning = false
 
 Tab:AddToggle({
     Name = "Auto Reply",
@@ -158,7 +158,7 @@ Tab:AddToggle({
         isntRunning = value
         if isntRunning then
             spawn(function()
-                while isNextRunning do
+                while isntRunning do
                     local args = { [1] = "Next" }
                     game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
                     wait(1)  -- รอ 1 วินาทีก่อนส่งคำสั่งอีกครั้ง
