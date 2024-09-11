@@ -132,24 +132,34 @@ else
         end
     })
 
-    Tab:AddToggle({
-        Name = "Auto Next",
-        Default = false,
-        Save = true,
-        Callback = function(value)
-            looping = value
+    -- Add Toggle for Auto Next
+local looping = false  -- Track the state of the loop
 
-            if looping then
-                spawn(function()
-                    while looping do
-                        local args = {
-                            [1] = "Next"
-                        }
+Tab:AddToggle({
+    Name = "Auto Next",
+    Default = false,
+    Save = true,
+    Callback = function(value)
+        looping = value
+
+        if looping then
+            -- Start the loop
+            spawn(function()
+                while looping do
+                    local args = { "Next" }
+                    local success, err = pcall(function()
                         game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                        wait(1)
+                    end)
+                    if not success then
+                        warn("Error sending 'Next' to server: " .. err)
                     end
-                end)
-            end
+                    wait(1) -- Adjust the wait time as needed
+                end
+            end)
+        else
+            -- Stop the loop
+            -- Simply set `looping` to false to exit the loop
+            print("Auto Next loop stopped")
         end
-    })
-end
+    end
+})
