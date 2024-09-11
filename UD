@@ -10,6 +10,8 @@ return {
     ["Pickleo"] = 34,
     ["Sprintwagon"] = 35,
     ["Ichiga"] = 36,
+    ["Jon"] = 38,
+    ["Luffo"] = 39,
     ["Roku"] = 41,
     ["Sanjo"] = 43,
 }
