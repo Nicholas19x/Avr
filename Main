@@ -107,9 +107,6 @@ local success, errorMessage = pcall(function()
     functionsSource = game:HttpGet('https://raw.githubusercontent.com/Nicholas19x/Avr/main/Auto%20upgrade')
     functions = loadstring(functionsSource)()
 end)
-
-if not success then
-    warn("Error loading functions: " .. errorMessage)
 else
     local isRunning = false
     local looping = false
@@ -150,9 +147,7 @@ Tab:AddToggle({
                     local success, err = pcall(function()
                         game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
                     end)
-                    if not success then
-                        warn("Error sending 'Next' to server: " .. err)
-                    end
+
                     wait(1) -- Adjust the wait time as needed
                 end
             end)
