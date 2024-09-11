@@ -161,3 +161,4 @@ Tab:AddButton({
         warn("Error creating window/tab: " .. err)
     end
 end
+createWindow()
