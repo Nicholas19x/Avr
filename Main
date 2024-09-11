@@ -86,7 +86,7 @@ end
 local isAutoStoryActive = false
 local isAutoUpgradeActive = false
 local isAutoNextActive = false
-local isAutoReplyActive = false
+local isAutoReplayActive = false
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local unitsFolder = game:GetService("Workspace"):FindFirstChild("Units")
@@ -198,20 +198,20 @@ GameplayTab:AddToggle({
 })
 
 GameplayTab:AddToggle({
-    Name = "Auto Reply",
+    Name = "Auto Replay",
     Default = false,
     Callback = function(value)
-        isAutoReplyActive = value
-        if isAutoReplyActive then
+        isAutoReplayActive = value
+        if isAutoReplayActive then
             spawn(function()
-                while isAutoReplyActive do
-                    local args = { [1] = "Reply" }
+                while isAutoReplayActive do
+                    local args = { [1] = "Replay" }
                     local success, errorMessage = pcall(function()
                         ReplicatedStorage.Networking.EndScreen.VoteEvent:FireServer(unpack(args))
                     end)
 
                     if not success then
-                        warn("Error during Auto Reply: " .. errorMessage)
+                        warn("Error during Auto Replay: " .. errorMessage)
                     end
 
                     wait(1)
