@@ -22,5 +22,5 @@ return {
     ["Rukio"] = 42,
     ["Sanjo"] = 43,
     ["Sosuke"] = 44,
-    ["Vogita" = 45,
+    ["Vogita"] = 45,
 }
