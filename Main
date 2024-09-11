@@ -155,15 +155,15 @@ else
 end
 
 
-local Tab2 = Window:MakeTab({
-	Name = "Summon",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+local summonTab = Window:MakeTab({
+    Name = "Summon",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
 })
 
-Tab2:AddButton({
-	Name = "Button!",
-	Callback = function()
-      		print("button pressed")
-  	end    
+summonTab:AddButton({
+    Name = "Button!",
+    Callback = function()
+        print("button pressed")
+    end    
 })
