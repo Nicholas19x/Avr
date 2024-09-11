@@ -4,7 +4,7 @@ local nameToNumber = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
-local worldModel = player.PlayerGui:WaitForChild("HUD"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
+local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
 
 -- กำหนดค่าตำแหน่งใหม่
 local VectorP = {
