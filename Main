@@ -129,3 +129,18 @@ end)
         end
     })
 
+ local isRunning = false
+    local looping = false
+
+Tab:AddToggle({
+        Name = "Auto Reply",
+        Default = false,
+        Callback = function(value)
+            isRunning = value
+
+            if isrunning then
+spawn(local args = {
+    [1] = "Next"
+}
+
+game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args)))
