@@ -1,8 +1,11 @@
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
-local objectToDelete = game.Players.LocalPlayer.PlayerGui:FindFirstChild("Notification")
-if objectToDelete then
-    objectToDelete:Destroy()
+local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+local notification = playerGui:FindFirstChild("Notification")
+
+if notification then
+    notification:Destroy()
 end
+
 local Window = OrionLib:MakeWindow({
     Name = "TEST HUB",
     HidePremium = false,
