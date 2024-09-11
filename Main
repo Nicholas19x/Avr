@@ -1,5 +1,9 @@
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
 local objectToDelete = game.Players.LocalPlayer.PlayerGui:FindFirstChild("Notification")
+if objectToDelete then
+    objectToDelete:Destroy()
+end
+
 local nameToNumber = {
     ["Itochi"] = 10,
     ["Roku Dark"] = 11,
@@ -26,9 +30,7 @@ local nameToNumber = {
     ["Sosuke"] = 44,
     ["Vogita"] = 45,
 }
-if objectToDelete then
-    objectToDelete:Destroy()
-end
+
 
 local Window = OrionLib:MakeWindow({
     Name = "TEST HUB",
