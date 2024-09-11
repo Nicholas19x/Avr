@@ -153,6 +153,7 @@ else
         end
     })
 end
+
 Tab:AddToggle({
     Name = "Auto Retry",
     Default = false,
@@ -164,7 +165,7 @@ Tab:AddToggle({
             spawn(function()
                 while looping do
                     local args = {
-                        [1] = "Retry"  -- Change "Next" to "Retry"
+                        [1] = "Retry" 
                     }
                     game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
                     wait(1)
@@ -173,6 +174,7 @@ Tab:AddToggle({
         end
     end
 })
+
 Tab:AddToggle({
     Name = "Auto Skip",
     Default = false,
@@ -184,7 +186,7 @@ Tab:AddToggle({
             spawn(function()
                 while looping do
                     local args = {
-                        [1] = "Skip"  -- Change "Next" to "Skip"
+                        [1] = "Skip"  
                     }
                     game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
                     wait(1)
