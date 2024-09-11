@@ -1,6 +1,7 @@
 return {
-    ["Roku Dark"] = 11,
     ["Itochi"] = 10,
+    ["Roku Dark"] = 11,
+    ["Goi"] = 12,
     ["Grim Wow"] = 14,
     ["Geno"] = 28,
     ["Alligator"] = 31,
