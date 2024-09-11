@@ -77,6 +77,117 @@ GameplayTab:AddToggle({
     end
 })
 
+-- Auto Story functionality
+local nameToNumber = {
+    ["Itochi"] = 10,
+    ["Roku Dark"] = 11,
+    ["Goi"] = 12,
+    ["Grim Wow"] = 14,
+    ["Kokashi"] = 26,
+    ["Genitsu"] = 27,
+    ["Geno"] = 28,
+    ["Inosake"] = 29,
+    ["Gaari"] = 30,
+    ["Alligator"] = 31,
+    ["Kinnua"] = 32,
+    ["Shinzi"] = 33,
+    ["Pickleo"] = 34,
+    ["Sprintwagon"] = 35,
+    ["Ichiga"] = 36,
+    ["Joe"] = 37,
+    ["Jon"] = 38,
+    ["Luffo"] = 39,
+    ["Noruto"] = 40,
+    ["Roku"] = 41,
+    ["Rukio"] = 42,
+    ["Sanjo"] = 43,
+    ["Sosuke"] = 44,
+    ["Vogita"] = 45,
+}
+
+local player = game:GetService("Players").LocalPlayer
+local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
+
+local VectorP = {
+    Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
+    Vector3.new(131.52040100097656, 8.935786247253418, 122.43047332763672),
+    Vector3.new(131.06385803222656, 8.935786247253418, 120.1720199584961),
+    Vector3.new(129.2808074951172, 8.935782432556152, 120.00386047363281),
+    Vector3.new(10.48846435546875, 11.518414497375488, -5.366661071777344),
+    Vector3.new(7.996025085449219, 11.518414497375488, -7.19559383392334),
+    Vector3.new(10.063709259033203, 11.518414497375488, -7.86088752746582),
+    Vector3.new(7.966606140136719, 11.518414497375488, -5.370272636413574),
+    Vector3.new(-275.70599365234375, 2.063093900680542, -121.72444152832031),
+    Vector3.new(-273.0750732421875, 2.063095808029175, -121.72998046875),
+    Vector3.new(-273.1800537109375, 2.063093900680542, -119.09394836425781),
+    Vector3.new(-276.15484619140625, 2.063091993331909, -119.13728332519531),
+}
+
+local function createArgs(numberValue, position)
+    return {
+        [1] = "Render",
+        [2] = {
+            [1] = "Units",
+            [2] = numberValue,
+            [3] = position,
+            [4] = 0
+        }
+    }
+end
+
+local isAutoStoryActive = false
+local isAutoStoryRunning = false
+
+local function startAutoStoryLoop()
+    if not isAutoStoryRunning then
+        isAutoStoryRunning = true
+        spawn(function()
+            while isAutoStoryActive do
+                for i, child in pairs(worldModel:GetChildren()) do
+                    local name = child.Name
+                    local numberValue = nameToNumber[name]
+
+                    if numberValue then
+                        for _, position in ipairs(VectorP) do
+                            local args = createArgs(numberValue, position)
+                            local success, errorMessage = pcall(function()
+                                game:GetService("ReplicatedStorage").Networking.UnitEvent:FireServer(unpack(args))
+                            end)
+
+                            if not success then
+                                warn("Error sending data to server: " .. errorMessage)
+                            end
+
+                            wait(0.2)
+                        end
+                    end
+                end
+                wait(0)
+            end
+            isAutoStoryRunning = false
+        end)
+    end
+end
+
+local function stopAutoStoryLoop()
+    isAutoStoryActive = false
+    wait(1)
+    isAutoStoryRunning = false
+end
+
+GameplayTab:AddToggle({
+    Name = "Auto Story (not support mythic)",
+    Default = false,
+    Callback = function(value)
+        isAutoStoryActive = value
+        if isAutoStoryActive then
+            startAutoStoryLoop()
+        else
+            stopAutoStoryLoop()
+        end
+    end
+})
+
 -- Miscellaneous Buttons
 MiscTab:AddButton({
     Name = "Summonx10",
