@@ -129,7 +129,6 @@ end)
         end
     })
 
- local isRunning = false
 
 Tab:AddToggle({
     Name = "Auto Reply",
@@ -148,7 +147,7 @@ Tab:AddToggle({
         end
     end
 })
-local isRunning = false
+
 
 Tab:AddToggle({
     Name = "Auto Next",
@@ -167,7 +166,6 @@ Tab:AddToggle({
         end
     end
 })
-local isRunning = false
 
 Tab:AddToggle({
     Name = "Auto Start",
