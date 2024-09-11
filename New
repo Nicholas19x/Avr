@@ -1,5 +1,4 @@
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
-
 local Window = OrionLib:MakeWindow({
     Name = "TEST HUB",
     HidePremium = false,
@@ -14,15 +13,18 @@ local Tab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local nameToNumber = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/UD"))()
+local nameToNumber = {
+    ["Itochi"] = 10, ["Roku Dark"] = 11, ["Goi"] = 12, ["Grim Wow"] = 14,
+    ["Kokashi"] = 26, ["Genitsu"] = 27, ["Geno"] = 28, ["Inosake"] = 29,
+    ["Gaari"] = 30, ["Alligator"] = 31, ["Kinnua"] = 32, ["Shinzi"] = 33,
+    ["Pickleo"] = 34, ["Sprintwagon"] = 35, ["Ichiga"] = 36, ["Joe"] = 37,
+    ["Jon"] = 38, ["Luffo"] = 39, ["Noruto"] = 40, ["Roku"] = 41,
+    ["Rukio"] = 42, ["Sanjo"] = 43, ["Sosuke"] = 44, ["Vogita"] = 45,
+}
 
--- ดึงตัวแปรจาก GitHub
-local setupSource = game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/Set")
-local setup = loadstring(setupSource)()
-
-local Players = setup.Players
-local player = setup.player
-local worldModel = setup.worldModel
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
 
 local VectorP = {
     Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
@@ -38,3 +40,72 @@ local VectorP = {
     Vector3.new(-273.1800537109375, 2.063093900680542, -119.09394836425781),
     Vector3.new(-276.15484619140625, 2.063091993331909, -119.13728332519531),
 }
+
+local function createArgs(numberValue, position)
+    return {
+        [1] = "Render",
+        [2] = {
+            [1] = "Units",
+            [2] = numberValue,
+            [3] = position,
+            [4] = 0
+        }
+    }
+end
+
+local isActive = false
+local isRunning = false
+
+local function startLoop()
+    if not isRunning then
+        isRunning = true
+        spawn(function()
+            while isActive do
+                for i, child in pairs(worldModel:GetChildren()) do
+                    local name = child.Name
+                    local numberValue = nameToNumber[name]
+                    
+                    if numberValue then
+                        for _, position in ipairs(VectorP) do
+                            print("Current value of position: " .. tostring(position))
+                            
+                            local args = createArgs(numberValue, position)
+                            local success, errorMessage = pcall(function()
+                                game:GetService("ReplicatedStorage").Networking.UnitEvent:FireServer(unpack(args))
+                            end)
+
+                            if not success then
+                                warn("Error sending data to server: " .. errorMessage)
+                            end
+
+                            wait(1)
+                        end
+                    end
+                end
+                wait(1)  -- Adjust wait time as needed
+            end
+            isRunning = false
+        end)
+    end
+end
+
+local function stopLoop()
+    isActive = false
+    wait(1)
+    isRunning = false
+end
+
+Tab:AddToggle({
+    Name = "Auto Action Loop",
+    Default = false,
+    Save = true,
+    Flag = "AutoAction",
+    Callback = function(value)
+        isActive = value
+        if isActive then
+            startLoop()
+        else
+            stopLoop()
+        end
+    end
+})
