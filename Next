@@ -1,4 +1,4 @@
--- AutoNext.lua
+-- Next.lua
 local function setupAutoNext(callback)
     local looping = false
 
@@ -13,7 +13,7 @@ local function setupAutoNext(callback)
                 spawn(function()
                     while looping do
                         local args = {
-                            [1] = "Next"
+                            [1] = "Next"  -- Action to be performed
                         }
                         game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
                         wait(1)
