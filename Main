@@ -19,16 +19,42 @@ local Tab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local nameToNumber = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/UD"))()
+local nameToNumber = {
+    ["Itochi"] = 10,
+    ["Roku Dark"] = 11,
+    ["Goi"] = 12,
+    ["Grim Wow"] = 14,
+    ["Kokashi"] = 26,
+    ["Genitsu"] = 27,
+    ["Geno"] = 28,
+    ["Inosake"] = 29,
+    ["Gaari"] = 30,
+    ["Alligator"] = 31,
+    ["Kinnua"] = 32,
+    ["Shinzi"] = 33,
+    ["Pickleo"] = 34,
+    ["Sprintwagon"] = 35,
+    ["Ichiga"] = 36,
+    ["Joe"] = 37,
+    ["Jon"] = 38,
+    ["Luffo"] = 39,
+    ["Noruto"] = 40,
+    ["Roku"] = 41,
+    ["Rukio"] = 42,
+    ["Sanjo"] = 43,
+    ["Sosuke"] = 44,
+    ["Vogita"] = 45,
+}
 
--- ดึงตัวแปรจาก GitHub
-local setupSource = game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/Set")
-local setup = loadstring(setupSource)()
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
 
-local Players = setup.Players
-local player = setup.player
-local worldModel = setup.worldModel
-
+return {
+    Players = Players,
+    player = player,
+    worldModel = worldModel
+}
 local VectorP = {
     Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
     Vector3.new(131.52040100097656, 8.935786247253418, 122.43047332763672),
@@ -44,10 +70,21 @@ local VectorP = {
     Vector3.new(-276.15484619140625, 2.063091993331909, -119.13728332519531),
 }
 
--- ดึงฟังก์ชันจาก GitHub
-local functionsSource = game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/Ap")
-local functions = loadstring(functionsSource)()
+local function createArgs(numberValue, position)
+    return {
+        [1] = "Render",
+        [2] = {
+            [1] = "Units",
+            [2] = numberValue,
+            [3] = position,
+            [4] = 0
+        }
+    }
+end
 
+return {
+    createArgs = createArgs
+}
 local isActive = false
 local isRunning = false
 
@@ -102,11 +139,7 @@ Tab:AddToggle({
     end
 })
 
-local functionsSource, functions
-local success, errorMessage = pcall(function()
-    functionsSource = game:HttpGet('https://raw.githubusercontent.com/Nicholas19x/Avr/main/Auto%20upgrade')
-    functions = loadstring(functionsSource)()
-end)
+
 
 if not success then
     warn("Error loading functions: " .. errorMessage)
