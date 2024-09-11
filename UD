@@ -8,7 +8,8 @@ return {
     ["Kinnua"] = 32,
     ["Shinzi"] = 33,
     ["Pickleo"] = 34,
+    ["Sprintwagon"] = 35,
     ["Ichiga"] = 36,
-    ["Roku"] = 41
-    ["Sanjo"] = 43
+    ["Roku"] = 41,
+    ["Sanjo"] = 43,
 }
