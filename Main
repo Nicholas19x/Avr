@@ -66,11 +66,11 @@ local function startLoop()
                                 warn("Error sending data to server: " .. errorMessage)
                             end
 
-                            wait(0.2)  -- ดีเลย์ 0.2 วินาทีระหว่างการวนลูป
+                            wait(0.2)
                         end
                     end
                 end
-                wait(0)  -- ไม่มีดีเลย์ระหว่างการเริ่มลูปใหม่
+                wait(0)
             end
             isRunning = false
         end)
@@ -79,7 +79,7 @@ end
 
 local function stopLoop()
     isActive = false
-    wait(1)  -- Ensure the loop stops
+    wait(1)
     isRunning = false
 end
 
@@ -87,7 +87,7 @@ Tab:AddToggle({
     Name = "Auto Story (not support mythic)",
     Default = false,
     Save = true,
-    Flag = "toggle" 
+    Flag = "toggle",
     Callback = function(value)
         isActive = value
         if isActive then
@@ -132,7 +132,7 @@ else
         Name = "Auto Next",
         Default = false,
         Save = true,
-        Flag = "toggle"
+        Flag = "toggle",
         Callback = function(value)
             looping = value
 
