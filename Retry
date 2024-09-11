@@ -1,0 +1,27 @@
+-- AutoRetry.lua
+local function setupAutoRetry(callback)
+    local looping = false
+
+    callback({
+        Name = "Auto Retry",
+        Default = false,
+        Save = true,
+        Callback = function(value)
+            looping = value
+
+            if looping then
+                spawn(function()
+                    while looping do
+                        local args = {
+                            [1] = "Retry" 
+                        }
+                        game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                        wait(1)
+                    end
+                end)
+            end
+        end
+    })
+end
+
+return setupAutoRetry
