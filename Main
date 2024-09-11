@@ -31,7 +31,7 @@ local worldModel = setup.worldModel
 
 local VectorP = {
     Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
-    Vector3.new(131.44040100097656, 8.935786247253418, 122.43047332763672),
+    Vector3.new(131.52040100097656, 8.935786247253418, 122.43047332763672),
     Vector3.new(131.06385803222656, 8.935786247253418, 120.1720199584961),
     Vector3.new(129.2808074951172, 8.935782432556152, 120.00386047363281),
     Vector3.new(10.48846435546875, 11.518414497375488, -5.366661071777344),
@@ -49,11 +49,11 @@ local functionsSource = game:HttpGet("https://raw.githubusercontent.com/Nicholas
 local functions = loadstring(functionsSource)()
 
 local isActive = false
-local isstRunning = false
+local isRunning = false
 
 local function startLoop()
-    if not isstRunning then
-        isstRunning = true
+    if not isRunning then
+        isRunning = true
         spawn(function()
             while isActive do
                 for i, child in pairs(worldModel:GetChildren()) do
@@ -77,7 +77,7 @@ local function startLoop()
                 end
                 wait(0)
             end
-            isstRunning = false
+            isRunning = false
         end)
     end
 end
@@ -108,6 +108,9 @@ local success, errorMessage = pcall(function()
     functions = loadstring(functionsSource)()
 end)
 
+if not success then
+    warn("Error loading functions: " .. errorMessage)
+else
     local isRunning = false
     local looping = false
 
@@ -129,41 +132,24 @@ end)
         end
     })
 
+    Tab:AddToggle({
+        Name = "Auto Next",
+        Default = false,
+        Save = true,
+        Callback = function(value)
+            looping = value
 
-local isReplyRunning = false
-local isntRunning = false
-
-Tab:AddToggle({
-    Name = "Auto Reply",
-    Default = false,
-    Callback = function(value)
-        isReplyRunning = value
-
-        if isReplyRunning then
-            spawn(function()
-                while isReplyRunning do
-                    local args = { [1] = "Reply" }
-                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                    wait(1)  -- รอ 1 วินาทีก่อนส่งคำสั่งอีกครั้ง
-                end
-            end)
+            if looping then
+                spawn(function()
+                    while looping do
+                        local args = {
+                            [1] = "Next"
+                        }
+                        game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                        wait(1)
+                    end
+                end)
+            end
         end
-    end
-})
-
-Tab:AddToggle({
-    Name = "Auto Next",
-    Default = false,
-    Callback = function(value)
-        isntRunning = value
-        if isntRunning then
-            spawn(function()
-                while isntRunning do
-                    local args = { [1] = "Next" }
-                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                    wait(1)  -- รอ 1 วินาทีก่อนส่งคำสั่งอีกครั้ง
-                end
-            end)
-        end
-    end
-})
+    })
+end
