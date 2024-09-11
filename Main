@@ -1,6 +1,31 @@
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
 local objectToDelete = game.Players.LocalPlayer.PlayerGui:FindFirstChild("Notification")
-
+local nameToNumber = {
+    ["Itochi"] = 10,
+    ["Roku Dark"] = 11,
+    ["Goi"] = 12,
+    ["Grim Wow"] = 14,
+    ["Kokashi"] = 26,
+    ["Genitsu"] = 27,
+    ["Geno"] = 28,
+    ["Inosake"] = 29,
+    ["Gaari"] = 30,
+    ["Alligator"] = 31,
+    ["Kinnua"] = 32,
+    ["Shinzi"] = 33,
+    ["Pickleo"] = 34,
+    ["Sprintwagon"] = 35,
+    ["Ichiga"] = 36,
+    ["Joe"] = 37,
+    ["Jon"] = 38,
+    ["Luffo"] = 39,
+    ["Noruto"] = 40,
+    ["Roku"] = 41,
+    ["Rukio"] = 42,
+    ["Sanjo"] = 43,
+    ["Sosuke"] = 44,
+    ["Vogita"] = 45,
+}
 if objectToDelete then
     objectToDelete:Destroy()
 end
@@ -19,7 +44,7 @@ local Tab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local nameToNumber = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/UD"))()
+
 
 -- ดึงตัวแปรจาก GitHub
 local setupSource = game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/Set")
