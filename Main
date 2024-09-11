@@ -186,6 +186,7 @@ game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unp
 
   	end    
 })
+end
 
 local Tab = Window:MakeTab({
 	Name = "Tab 1",
