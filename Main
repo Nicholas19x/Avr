@@ -138,8 +138,7 @@ Tab:AddToggle({
     Callback = function(value)
         isRunning = value
 
-        if isRunning then
-            spawn(function()
+        if isRunning then do
                 local args = {
     [1] = "Next"
 }
