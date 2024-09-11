@@ -23,6 +23,7 @@ Tab:AddButton({
 	Name = "RedeemCode",
 	Callback = function()
 print = "hak"
+end
 })
 
 local Tab = Window:MakeTab({
