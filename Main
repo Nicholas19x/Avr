@@ -49,11 +49,11 @@ local functionsSource = game:HttpGet("https://raw.githubusercontent.com/Nicholas
 local functions = loadstring(functionsSource)()
 
 local isActive = false
-local isRunning = false
+local isstRunning = false
 
 local function startLoop()
-    if not isRunning then
-        isRunning = true
+    if not isstRunning then
+        isstRunning = true
         spawn(function()
             while isActive do
                 for i, child in pairs(worldModel:GetChildren()) do
@@ -77,7 +77,7 @@ local function startLoop()
                 end
                 wait(0)
             end
-            isRunning = false
+            isstRunning = false
         end)
     end
 end
