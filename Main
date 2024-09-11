@@ -31,7 +31,6 @@ local nameToNumber = {
     ["Vogita"] = 45,
 }
 
-
 local Window = OrionLib:MakeWindow({
     Name = "TEST HUB",
     HidePremium = false,
@@ -45,10 +44,10 @@ local Tab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
+
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
-
 
 local VectorP = {
     Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
@@ -64,6 +63,7 @@ local VectorP = {
     Vector3.new(-273.1800537109375, 2.063093900680542, -119.09394836425781),
     Vector3.new(-276.15484619140625, 2.063091993331909, -119.13728332519531),
 }
+
 local function createArgs(numberValue, position)
     return {
         [1] = "Render",
@@ -75,10 +75,6 @@ local function createArgs(numberValue, position)
         }
     }
 end
-
-return {
-    createArgs = createArgs
-}
 
 local isActive = false
 local isRunning = false
@@ -94,7 +90,7 @@ local function startLoop()
                     
                     if numberValue then
                         for _, position in ipairs(VectorP) do
-                            local args = functions.createArgs(numberValue, position)
+                            local args = createArgs(numberValue, position)
                             local success, errorMessage = pcall(function()
                                 game:GetService("ReplicatedStorage").Networking.UnitEvent:FireServer(unpack(args))
                             end)
@@ -163,3 +159,63 @@ else
             end
         end
     })
+
+    Tab:AddToggle({
+        Name = "Auto Next",
+        Default = false,
+        Save = true,
+        Callback = function(value)
+            looping = value
+
+            if looping then
+                spawn(function()
+                    while looping do
+                        local args = {
+                            [1] = "Next"
+                        }
+                        game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                        wait(1)
+                    end
+                end)
+            end
+        end
+    })
+end
+
+local Tab = Window:MakeTab({
+    Name = "Misc.",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+Tab:AddButton({
+    Name = "Summonx10",
+    Callback = function()
+        local args = {
+            [1] = "SummonTen",
+            [2] = "Special"
+        }
+        game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unpack(args))
+    end    
+})
+
+Tab:AddButton({
+    Name = "Summonx1",
+    Callback = function()
+        local args = {
+            [1] = "SummonOne",
+            [2] = "Special"
+        }
+        game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unpack(args))
+    end    
+})
+
+Tab:AddButton({
+    Name = "RedeemCode",
+    Callback = function()
+        local scriptURL = "https://raw.githubusercontent.com/Nicholas19x/Avr/main/CODE"
+        local script = game:HttpGet(scriptURL)
+        local executeScript = loadstring(script)
+        executeScript()
+    end
+})
