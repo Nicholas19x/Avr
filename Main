@@ -154,26 +154,47 @@ else
     })
 end
 
-Tab:AddToggle({
-    Name = "Auto Retry",
-    Default = false,
-    Save = true,
-    Callback = function(value)
-        looping = value
-
-        if looping then
-            spawn(function()
-                while looping do
-                    local args = {
-                        [1] = "Retry" 
-                    }
-                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                    wait(1)
-                end
+local function loadExternalScript(url)
+            local success, content = pcall(function()
+                return game:HttpGet(url)
             end)
+            if success then
+                return loadstring(content)()
+            else
+                warn("Failed to fetch script from " .. url .. ": " .. content)
+                return nil
+            end
         end
+
+        local setupAutoRetry = loadExternalScript("https://raw.githubusercontent.com/Nicholas19x/Avr/main/Retry")
+        if not setupAutoRetry then return end
+        print("AutoRetry function loaded successfully.")
+
+        Tab:AddToggle({
+            Name = "Auto Retry",
+            Default = false,
+            Save = true,
+            Callback = function(value)
+                setupAutoRetry(function(toggle)
+                    if toggle then
+                        while value do
+                            local args = {
+                                [1] = "Retry"
+                            }
+                            game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                            wait(1)
+                        end
+                    end
+                end)
+            end
+        })
+
+    end)
+
+    if not success then
+        warn("Error creating window/tab: " .. err)
     end
-})
+end
 
 Tab:AddToggle({
     Name = "Auto Skip",
