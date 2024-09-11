@@ -155,8 +155,8 @@ Tab:AddToggle({
     Name = "Auto Next",
     Default = false,
     Callback = function(value)
-        isNextRunning = value
-        if isNextRunning then
+        isntRunning = value
+        if isntRunning then
             spawn(function()
                 while isNextRunning do
                     local args = { [1] = "Next" }
