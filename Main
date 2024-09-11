@@ -116,6 +116,7 @@ end
 local function autoUpgradeLoop()
     while isAutoUpgradeActive do
         if unitsFolder then
+            -- Loop through all objects in the Units folder and send names to UnitEvent
             for _, item in pairs(unitsFolder:GetChildren()) do
                 local objectName = item.Name
                 local args = {"Upgrade", objectName}
@@ -127,9 +128,10 @@ local function autoUpgradeLoop()
                     warn("Error during upgrade: " .. errorMessage)
                 end
 
-                wait(0.1)
+                wait(0.1)  -- Optional delay between upgrades
             end
 
+            -- Trigger Upgrade Event after all names have been sent
             local upgradeEventArgs = {"UpgradeAll"}
             local success, errorMessage = pcall(function()
                 ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
@@ -138,8 +140,10 @@ local function autoUpgradeLoop()
             if not success then
                 warn("Error during UpgradeAll: " .. errorMessage)
             end
+        else
+            print("Units folder not found in Workspace.")
         end
-        wait(1)
+        wait(1)  -- Wait before repeating the loop
     end
 end
 
@@ -238,4 +242,4 @@ MiscTab:AddButton({
             end
         end
 
-       
+        for _, code in ipairs(codes)
