@@ -107,7 +107,7 @@ local success, errorMessage = pcall(function()
     functionsSource = game:HttpGet('https://raw.githubusercontent.com/Nicholas19x/Avr/main/Auto%20upgrade')
     functions = loadstring(functionsSource)()
 end)
-else
+
     local isRunning = false
     local looping = false
 
