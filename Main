@@ -43,16 +43,10 @@ local Tab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
 
-
-
--- ดึงตัวแปรจาก GitHub
-local setupSource = game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/Set")
-local setup = loadstring(setupSource)()
-
-local Players = setup.Players
-local player = setup.player
-local worldModel = setup.worldModel
 
 local VectorP = {
     Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
@@ -68,10 +62,21 @@ local VectorP = {
     Vector3.new(-273.1800537109375, 2.063093900680542, -119.09394836425781),
     Vector3.new(-276.15484619140625, 2.063091993331909, -119.13728332519531),
 }
+local function createArgs(numberValue, position)
+    return {
+        [1] = "Render",
+        [2] = {
+            [1] = "Units",
+            [2] = numberValue,
+            [3] = position,
+            [4] = 0
+        }
+    }
+end
 
--- ดึงฟังก์ชันจาก GitHub
-local functionsSource = game:HttpGet("https://raw.githubusercontent.com/Nicholas19x/Avr/main/Ap")
-local functions = loadstring(functionsSource)()
+return {
+    createArgs = createArgs
+}
 
 local isActive = false
 local isRunning = false
