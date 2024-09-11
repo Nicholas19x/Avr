@@ -39,7 +39,7 @@ local Window = OrionLib:MakeWindow({
     ConfigFolder = "TEST HUB"
 })
 
-local Tab = Window:MakeTab({
+local GameplayTab = Window:MakeTab({
     Name = "Gameplay",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
@@ -116,7 +116,7 @@ local function stopLoop()
     isRunning = false
 end
 
-Tab:AddToggle({
+GameplayTab:AddToggle({
     Name = "Auto Story (not support mythic)",
     Default = false,
     Save = true,
@@ -154,18 +154,17 @@ local function autoUpgradeLoop()
     end
 end
 
-return {
-    sendUnitNames = sendUnitNames,
-    autoUpgradeLoop = autoUpgradeLoop
-}
+local functionsSource, functions
+local success, errorMessage = pcall(function()
+    functionsSource = game:HttpGet('https://raw.githubusercontent.com/Nicholas19x/Avr/main/Auto%20upgrade')
+    functions = loadstring(functionsSource)()
+end)
 
-if not success then
-    warn("Error loading functions: " .. errorMessage)
-else
+if success then
     local isRunning = false
     local looping = false
 
-    Tab:AddToggle({
+    GameplayTab:AddToggle({
         Name = "Enable Auto Upgrade",
         Default = false,
         Callback = function(value)
@@ -183,7 +182,7 @@ else
         end
     })
 
-    Tab:AddToggle({
+    GameplayTab:AddToggle({
         Name = "Auto Next",
         Default = false,
         Save = true,
@@ -203,15 +202,17 @@ else
             end
         end
     })
+else
+    warn("Error loading functions: " .. errorMessage)
 end
 
-local Tab = Window:MakeTab({
+local MiscTab = Window:MakeTab({
     Name = "Misc.",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
 
-Tab:AddButton({
+MiscTab:AddButton({
     Name = "Summonx10",
     Callback = function()
         local args = {
@@ -222,7 +223,7 @@ Tab:AddButton({
     end    
 })
 
-Tab:AddButton({
+MiscTab:AddButton({
     Name = "Summonx1",
     Callback = function()
         local args = {
@@ -233,32 +234,7 @@ Tab:AddButton({
     end    
 })
 
-Tab:AddButton({
+MiscTab:AddButton({
     Name = "RedeemCode",
     Callback = function()
-        local codes = {
-    "400KLIKES",
-    "100KLIKES",
-    "200KLIKES",
-    "300KLIKES",
-    "10MVISITS",
-    "25MVISITS",
-    "10KLIKES",
-    "RELEASE",
-    "DELAY",
--- Add more codes here as needed
-}
-
-local function fireCode(code)
-    local args = {
-        [1] = code
-    }
-    game:GetService("ReplicatedStorage").Networking.CodesEvent:FireServer(unpack(args))
-end
-
-for _, code in ipairs(codes) do
-    pcall(function()
-        fireCode(code)
-    end)
-end
-})
+        local
