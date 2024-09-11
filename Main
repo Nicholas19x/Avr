@@ -130,18 +130,39 @@ end)
     })
 
 
+local isReplyRunning = false
+local isNextRunning = false
+
 Tab:AddToggle({
     Name = "Auto Reply",
     Default = false,
     Callback = function(value)
-        isRunning = value
+        isReplyRunning = value
 
-        if isRunning then
+        if isReplyRunning then
             spawn(function()
-                while isRunning do
+                while isReplyRunning do
                     local args = { [1] = "Reply" }
                     game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                    wait(1)  -- รอ 5 วินาทีก่อนส่งคำสั่งอีกครั้ง
+                    wait(1)  -- รอ 1 วินาทีก่อนส่งคำสั่งอีกครั้ง
+                end
+            end)
+        end
+    end
+})
+
+Tab:AddToggle({
+    Name = "Auto Next",
+    Default = false,
+    Callback = function(value)
+        isNextRunning = value
+
+        if isNextRunning then
+            spawn(function()
+                while isNextRunning do
+                    local args = { [1] = "Next" }
+                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                    wait(1)  -- รอ 1 วินาทีก่อนส่งคำสั่งอีกครั้ง
                 end
             end)
         end
