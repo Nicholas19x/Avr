@@ -1,0 +1,15 @@
+local function createArgs(numberValue, position)
+    return {
+        [1] = "Render",
+        [2] = {
+            [1] = "Units",
+            [2] = numberValue,
+            [3] = position,
+            [4] = 0
+        }
+    }
+end
+
+return {
+    createArgs = createArgs
+}
