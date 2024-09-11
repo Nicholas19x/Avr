@@ -186,34 +186,13 @@ game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unp
 
   	end    
 })
-local Tab = Window:MakeTab({
-	Name = "Summon",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
 
 Tab:AddButton({
-	Name = "Summonx10",
+	Name = "RedeemCode",
 	Callback = function()
-      		local args = {
-    [1] = "SummonTen",
-    [2] = "Special"
-}
-
-game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unpack(args))
-
-  	end    
-})
-
-Tab:AddButton({
-	Name = "Summonx1",
-	Callback = function()
-      		local args = {
-    [1] = "SummonOen",
-    [2] = "Special"
-}
-
-game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unpack(args))
-
-  	end    
+local scriptURL = "https://raw.githubusercontent.com/Nicholas19x/Avr/main/CODE"
+local script = game:HttpGet(scriptURL)
+local executeScript = loadstring(script)
+executeScript()
+        end
 })
