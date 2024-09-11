@@ -25,6 +25,7 @@ local nameToNumber = {
     ["Itochi"] = 10,
     ["Roku Dark"] = 11,
     ["Goi"] = 12,
+    ["Kinaru"] = 13,
     ["Grim Wow"] = 14,
     ["Kokashi"] = 26,
     ["Genitsu"] = 27,
