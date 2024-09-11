@@ -132,27 +132,7 @@ else
         end
     })
 
-    Tab:AddToggle({
-        Name = "Auto Next",
-        Default = false,
-        Save = true,
-        Callback = function(value)
-            looping = value
-
-            if looping then
-                spawn(function()
-                    while looping do
-                        local args = {
-                            [1] = "Next"
-                        }
-                        game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                        wait(1)
-                    end
-                end)
-            end
-        end
-    })
-end
+    
 
 local function loadExternalScript(url)
             local success, content = pcall(function()
