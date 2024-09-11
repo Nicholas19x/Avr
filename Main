@@ -133,37 +133,23 @@ else
     })
 
     
+Tab:AddButton({
+            Name = "Auto Next Loop",
+            Callback = function()
+                local looping = true
 
-local function loadExternalScript(url)
-            local success, content = pcall(function()
-                return game:HttpGet(url)
-            end)
-            if success then
-                return loadstring(content)()
-            else
-                warn("Failed to fetch script from " .. url .. ": " .. content)
-                return nil
-            end
-        end
-
-        local setupAutoRetry = loadExternalScript("https://raw.githubusercontent.com/Nicholas19x/Avr/main/Retry")
-        if not setupAutoRetry then return end
-        print("AutoRetry function loaded successfully.")
-
-        Tab:AddToggle({
-            Name = "Auto Retry",
-            Default = false,
-            Save = true,
-            Callback = function(value)
-                setupAutoRetry(function(toggle)
-                    if toggle then
-                        while value do
-                            local args = {
-                                [1] = "Retry"
-                            }
+                spawn(function()
+                    while looping do
+                        local args = {
+                            [1] = "Next"
+                        }
+                        local success, err = pcall(function()
                             game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                            wait(1)
+                        end)
+                        if not success then
+                            warn("Error sending 'Next' to server: " .. err)
                         end
+                        wait(2)  -- Wait for 2 seconds before repeating
                     end
                 end)
             end
@@ -175,24 +161,3 @@ local function loadExternalScript(url)
         warn("Error creating window/tab: " .. err)
     end
 end
-
-Tab:AddToggle({
-    Name = "Auto Skip",
-    Default = false,
-    Save = true,
-    Callback = function(value)
-        looping = value
-
-        if looping then
-            spawn(function()
-                while looping do
-                    local args = {
-                        [1] = "Skip"  
-                    }
-                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                    wait(1)
-                end
-            end)
-        end
-    end
-})
