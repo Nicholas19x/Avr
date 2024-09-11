@@ -48,9 +48,6 @@ local nameToNumber = {
     ["Vogita"] = 45,
 }
 
-local player = game:GetService("Players").LocalPlayer
-local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
-
 local VectorP = {
     Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
     Vector3.new(131.52040100097656, 8.935786247253418, 122.43047332763672),
@@ -79,43 +76,52 @@ local function createArgs(numberValue, position)
 end
 
 local isAutoStoryActive = false
-local isAutoStoryRunning = false
+local isAutoUpgradeActive = false
+local isAutoNextActive = false
 
-local function startAutoStoryLoop()
-    if not isAutoStoryRunning then
-        isAutoStoryRunning = true
-        spawn(function()
-            while isAutoStoryActive do
-                for i, child in pairs(worldModel:GetChildren()) do
-                    local name = child.Name
-                    local numberValue = nameToNumber[name]
+local function autoStoryLoop()
+    while isAutoStoryActive do
+        local player = game.Players.LocalPlayer
+        local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
 
-                    if numberValue then
-                        for _, position in ipairs(VectorP) do
-                            local args = createArgs(numberValue, position)
-                            local success, errorMessage = pcall(function()
-                                game:GetService("ReplicatedStorage").Networking.UnitEvent:FireServer(unpack(args))
-                            end)
+        for i, child in pairs(worldModel:GetChildren()) do
+            local name = child.Name
+            local numberValue = nameToNumber[name]
+            
+            if numberValue then
+                for _, position in ipairs(VectorP) do
+                    local args = createArgs(numberValue, position)
+                    local success, errorMessage = pcall(function()
+                        game:GetService("ReplicatedStorage").Networking.UnitEvent:FireServer(unpack(args))
+                    end)
 
-                            if not success then
-                                warn("Error sending data to server: " .. errorMessage)
-                            end
-
-                            wait(0.2)
-                        end
+                    if not success then
+                        warn("Error sending data to server: " .. errorMessage)
                     end
+
+                    wait(0.2)
                 end
-                wait(0)
             end
-            isAutoStoryRunning = false
-        end)
+        end
+        wait(0)
     end
 end
 
-local function stopAutoStoryLoop()
-    isAutoStoryActive = false
-    wait(1)
-    isAutoStoryRunning = false
+local function autoUpgradeLoop()
+    while isAutoUpgradeActive do
+        if unitsFolder then
+            for _, item in pairs(unitsFolder:GetChildren()) do
+                local objectName = item.Name
+                local args = {"Upgrade", objectName}
+                ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(args))
+                wait(0.1)
+            end
+
+            local upgradeEventArgs = {"UpgradeAll"}
+            ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
+        end
+        wait(1)
+    end
 end
 
 GameplayTab:AddToggle({
@@ -124,38 +130,10 @@ GameplayTab:AddToggle({
     Callback = function(value)
         isAutoStoryActive = value
         if isAutoStoryActive then
-            startAutoStoryLoop()
-        else
-            stopAutoStoryLoop()
+            spawn(autoStoryLoop)
         end
     end
 })
-
--- Auto Upgrade functionality
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local unitsFolder = game:GetService("Workspace"):FindFirstChild("Units")
-
-local function sendUnitNames()
-    if unitsFolder then
-        for _, item in pairs(unitsFolder:GetChildren()) do
-            local objectName = item.Name
-            local args = {"Upgrade", objectName}
-            ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(args))
-            wait(0.1)
-        end
-
-        local upgradeEventArgs = {"UpgradeAll"}
-        ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
-    end
-end
-
-local isAutoUpgradeActive = false
-local function autoUpgradeLoop()
-    while isAutoUpgradeActive do
-        sendUnitNames()
-        wait(1)
-    end
-end
 
 GameplayTab:AddToggle({
     Name = "Enable Auto Upgrade",
@@ -167,9 +145,6 @@ GameplayTab:AddToggle({
         end
     end
 })
-
--- Auto Next functionality
-local isAutoNextActive = false
 
 GameplayTab:AddToggle({
     Name = "Auto Next",
