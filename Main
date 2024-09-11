@@ -82,6 +82,9 @@ local isAutoStoryActive = false
 local isAutoUpgradeActive = false
 local isAutoNextActive = false
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local unitsFolder = game:GetService("Workspace"):FindFirstChild("Units")
+
 local function autoStoryLoop()
     while isAutoStoryActive do
         local player = game.Players.LocalPlayer
@@ -95,7 +98,7 @@ local function autoStoryLoop()
                 for _, position in ipairs(VectorP) do
                     local args = createArgs(numberValue, position)
                     local success, errorMessage = pcall(function()
-                        game:GetService("ReplicatedStorage").Networking.UnitEvent:FireServer(unpack(args))
+                        ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(args))
                     end)
 
                     if not success then
@@ -106,7 +109,7 @@ local function autoStoryLoop()
                 end
             end
         end
-        wait(0)
+        wait(0)  -- Shorter wait to keep it responsive
     end
 end
 
@@ -116,12 +119,25 @@ local function autoUpgradeLoop()
             for _, item in pairs(unitsFolder:GetChildren()) do
                 local objectName = item.Name
                 local args = {"Upgrade", objectName}
-                ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(args))
+                local success, errorMessage = pcall(function()
+                    ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(args))
+                end)
+
+                if not success then
+                    warn("Error during upgrade: " .. errorMessage)
+                end
+
                 wait(0.1)
             end
 
             local upgradeEventArgs = {"UpgradeAll"}
-            ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
+            local success, errorMessage = pcall(function()
+                ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
+            end)
+
+            if not success then
+                warn("Error during UpgradeAll: " .. errorMessage)
+            end
         end
         wait(1)
     end
@@ -158,7 +174,14 @@ GameplayTab:AddToggle({
             spawn(function()
                 while isAutoNextActive do
                     local args = { [1] = "Next" }
-                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                    local success, errorMessage = pcall(function()
+                        ReplicatedStorage.Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                    end)
+
+                    if not success then
+                        warn("Error during Auto Next: " .. errorMessage)
+                    end
+
                     wait(1)
                 end
             end)
@@ -171,7 +194,13 @@ MiscTab:AddButton({
     Name = "Summonx10",
     Callback = function()
         local args = { [1] = "SummonTen", [2] = "Special" }
-        game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unpack(args))
+        local success, errorMessage = pcall(function()
+            ReplicatedStorage.Networking.Units.SummonEvent:FireServer(unpack(args))
+        end)
+
+        if not success then
+            warn("Error during Summonx10: " .. errorMessage)
+        end
     end    
 })
 
@@ -179,7 +208,13 @@ MiscTab:AddButton({
     Name = "Summonx1",
     Callback = function()
         local args = { [1] = "SummonOne", [2] = "Special" }
-        game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unpack(args))
+        local success, errorMessage = pcall(function()
+            ReplicatedStorage.Networking.Units.SummonEvent:FireServer(unpack(args))
+        end)
+
+        if not success then
+            warn("Error during Summonx1: " .. errorMessage)
+        end
     end    
 })
 
@@ -194,13 +229,13 @@ MiscTab:AddButton({
 
         local function fireCode(code)
             local args = { [1] = code }
-            game:GetService("ReplicatedStorage").Networking.CodesEvent:FireServer(unpack(args))
+            local success, errorMessage = pcall(function()
+                ReplicatedStorage.Networking.CodesEvent:FireServer(unpack(args))
+            end)
+
+            if not success then
+                warn("Error during code redemption: " .. errorMessage)
+            end
         end
 
-        for _, code in ipairs(codes) do
-            pcall(function()
-                fireCode(code)
-            end)
-        end
-    end    
-})
+       
