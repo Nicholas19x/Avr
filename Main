@@ -131,34 +131,3 @@ else
             end
         end
     })
-
-    
-Tab:AddButton({
-            Name = "Auto Next Loop",
-            Callback = function()
-                local looping = true
-
-                spawn(function()
-                    while looping do
-                        local args = {
-                            [1] = "Next"
-                        }
-                        local success, err = pcall(function()
-                            game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                        end)
-                        if not success then
-                            warn("Error sending 'Next' to server: " .. err)
-                        end
-                        wait(2)  -- Wait for 2 seconds before repeating
-                    end
-                end)
-            end
-        })
-
-    end)
-
-    if not success then
-        warn("Error creating window/tab: " .. err)
-    end
-end
-createWindow()
