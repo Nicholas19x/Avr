@@ -92,7 +92,6 @@ Tab:AddToggle({
     Name = "Auto Story (not support mythic)",
     Default = false,
     Save = true,
-    Flag = "toggle",
     Callback = function(value)
         isActive = value
         if isActive then
@@ -137,7 +136,6 @@ else
         Name = "Auto Next",
         Default = false,
         Save = true,
-        Flag = "toggle",
         Callback = function(value)
             looping = value
 
