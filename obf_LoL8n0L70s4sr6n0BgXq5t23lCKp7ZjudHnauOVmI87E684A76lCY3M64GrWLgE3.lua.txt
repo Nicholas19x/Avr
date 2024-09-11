@@ -190,9 +190,29 @@ game:GetService("ReplicatedStorage").Networking.Units.SummonEvent:FireServer(unp
 Tab:AddButton({
 	Name = "RedeemCode",
 	Callback = function()
-local scriptURL = "https://raw.githubusercontent.com/Nicholas19x/Avr/main/CODE"
-local script = game:HttpGet(scriptURL)
-local executeScript = loadstring(script)
-executeScript()
-        end
+local codes = {
+    "400KLIKES",
+    "100KLIKES",
+    "200KLIKES",
+    "300KLIKES",
+    "10MVISITS",
+    "25MVISITS",
+    "10KLIKES",
+    "RELEASE",
+    "DELAY",
+-- Add more codes here as needed
+}
+
+local function fireCode(code)
+    local args = {
+        [1] = code
+    }
+    game:GetService("ReplicatedStorage").Networking.CodesEvent:FireServer(unpack(args))
+end
+
+for _, code in ipairs(codes) do
+    pcall(function()
+        fireCode(code)
+    end)
+end
 })
