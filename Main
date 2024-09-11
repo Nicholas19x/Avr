@@ -86,6 +86,7 @@ end
 local isAutoStoryActive = false
 local isAutoUpgradeActive = false
 local isAutoNextActive = false
+local isAutoReplyActive = false
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local unitsFolder = game:GetService("Workspace"):FindFirstChild("Units")
