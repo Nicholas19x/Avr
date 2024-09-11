@@ -141,14 +141,10 @@ Tab:AddToggle({
         if isRunning then
             spawn(function()
                 local args = {
-                    [1] = "Next"
-                }
-                local replicatedStorage = game:GetService("ReplicatedStorage")
-                local someService = replicatedStorage:FindFirstChild("SomeService")
-                if someService then
-                    someService:Fire(args)
-                else
-                    warn("SomeService not found in ReplicatedStorage.")
+    [1] = "Next"
+}
+
+game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
                 end
             end)
         end
