@@ -1,0 +1,9 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local worldModel = player.PlayerGui:WaitForChild("Hotbar"):WaitForChild("Main"):WaitForChild("Units"):WaitForChild("1"):WaitForChild("UnitTemplate"):WaitForChild("Holder"):WaitForChild("Main"):WaitForChild("UnitImage"):WaitForChild("ViewportFrame"):WaitForChild("WorldModel")
+
+return {
+    Players = Players,
+    player = player,
+    worldModel = worldModel
+}
