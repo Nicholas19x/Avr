@@ -156,7 +156,6 @@ Tab:AddToggle({
     Default = false,
     Callback = function(value)
         isNextRunning = value
-
         if isNextRunning then
             spawn(function()
                 while isNextRunning do
