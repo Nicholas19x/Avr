@@ -20,63 +20,6 @@ local MiscTab = Window:MakeTab({
     PremiumOnly = false
 })
 
--- Auto Upgrade functionality
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local unitsFolder = game:GetService("Workspace"):FindFirstChild("Units")
-
-local function sendUnitNames()
-    if unitsFolder then
-        for _, item in pairs(unitsFolder:GetChildren()) do
-            local objectName = item.Name
-            local args = {"Upgrade", objectName}
-            ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(args))
-            wait(0.1)
-        end
-
-        local upgradeEventArgs = {"UpgradeAll"}
-        ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
-    end
-end
-
-local isAutoUpgradeActive = false
-local function autoUpgradeLoop()
-    while isAutoUpgradeActive do
-        sendUnitNames()
-        wait(1)
-    end
-end
-
-GameplayTab:AddToggle({
-    Name = "Enable Auto Upgrade",
-    Default = false,
-    Callback = function(value)
-        isAutoUpgradeActive = value
-        if isAutoUpgradeActive then
-            spawn(autoUpgradeLoop)
-        end
-    end
-})
-
--- Auto Next functionality
-local isAutoNextActive = false
-
-GameplayTab:AddToggle({
-    Name = "Auto Next",
-    Default = false,
-    Callback = function(value)
-        isAutoNextActive = value
-        if isAutoNextActive then
-            spawn(function()
-                while isAutoNextActive do
-                    local args = { [1] = "Next" }
-                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
-                    wait(1)
-                end
-            end)
-        end
-    end
-})
-
 -- Auto Story functionality
 local nameToNumber = {
     ["Itochi"] = 10,
@@ -184,6 +127,63 @@ GameplayTab:AddToggle({
             startAutoStoryLoop()
         else
             stopAutoStoryLoop()
+        end
+    end
+})
+
+-- Auto Upgrade functionality
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local unitsFolder = game:GetService("Workspace"):FindFirstChild("Units")
+
+local function sendUnitNames()
+    if unitsFolder then
+        for _, item in pairs(unitsFolder:GetChildren()) do
+            local objectName = item.Name
+            local args = {"Upgrade", objectName}
+            ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(args))
+            wait(0.1)
+        end
+
+        local upgradeEventArgs = {"UpgradeAll"}
+        ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
+    end
+end
+
+local isAutoUpgradeActive = false
+local function autoUpgradeLoop()
+    while isAutoUpgradeActive do
+        sendUnitNames()
+        wait(1)
+    end
+end
+
+GameplayTab:AddToggle({
+    Name = "Enable Auto Upgrade",
+    Default = false,
+    Callback = function(value)
+        isAutoUpgradeActive = value
+        if isAutoUpgradeActive then
+            spawn(autoUpgradeLoop)
+        end
+    end
+})
+
+-- Auto Next functionality
+local isAutoNextActive = false
+
+GameplayTab:AddToggle({
+    Name = "Auto Next",
+    Default = false,
+    Callback = function(value)
+        isAutoNextActive = value
+        if isAutoNextActive then
+            spawn(function()
+                while isAutoNextActive do
+                    local args = { [1] = "Next" }
+                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                    wait(1)
+                end
+            end)
         end
     end
 })
