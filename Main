@@ -90,7 +90,6 @@ end
 
 Tab:AddToggle({
     Name = "Auto Story (not support mythic)",
-    Default = false,
     Save = true,
     Callback = function(value)
         isActive = value
@@ -134,7 +133,6 @@ else
 
     Tab:AddToggle({
         Name = "Auto Next",
-        Default = false,
         Save = true,
         Callback = function(value)
             looping = value
