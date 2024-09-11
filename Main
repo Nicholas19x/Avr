@@ -130,17 +130,27 @@ end)
     })
 
  local isRunning = false
-    local looping = false
+local looping = false
 
 Tab:AddToggle({
-        Name = "Auto Reply",
-        Default = false,
-        Callback = function(value)
-            isRunning = value
+    Name = "Auto Reply",
+    Default = false,
+    Callback = function(value)
+        isRunning = value
 
-            if isrunning then
-spawn(local args = {
-    [1] = "Next"
-}
-
-game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args)))
+        if isRunning then
+            spawn(function()
+                local args = {
+                    [1] = "Next"
+                }
+                local replicatedStorage = game:GetService("ReplicatedStorage")
+                local someService = replicatedStorage:FindFirstChild("SomeService")
+                if someService then
+                    someService:Fire(args)
+                else
+                    warn("SomeService not found in ReplicatedStorage.")
+                end
+            end)
+        end
+    end
+})
