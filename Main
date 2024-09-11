@@ -155,13 +155,13 @@ else
 end
 
 
-local Tab = Window:MakeTab({
+local Tab2 = Window:MakeTab({
 	Name = "Summon",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
-Tab:AddButton({
+Tab2:AddButton({
 	Name = "Button!",
 	Callback = function()
       		print("button pressed")
