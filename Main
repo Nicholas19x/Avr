@@ -130,7 +130,6 @@ end)
     })
 
  local isRunning = false
-local looping = false
 
 Tab:AddToggle({
     Name = "Auto Reply",
@@ -138,12 +137,12 @@ Tab:AddToggle({
     Callback = function(value)
         isRunning = value
 
-        if isRunning then do
-                local args = {
-    [1] = "Next"
-}
-
-game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+        if isRunning then
+            spawn(function()
+                while isRunning do
+                    local args = { [1] = "Next" }
+                    game:GetService("ReplicatedStorage").Networking.EndScreen.VoteEvent:FireServer(unpack(args))
+                    wait(1)  -- รอ 5 วินาทีก่อนส่งคำสั่งอีกครั้ง
                 end
             end)
         end
