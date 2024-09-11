@@ -8,4 +8,6 @@ return {
     ["Kinnua"] = 32,
     ["Shinzi"] = 33,
     ["Pickleo"] = 34,
+    ["Roku"] = 41
+    ["Sanjo"] = 43
 }
