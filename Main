@@ -20,7 +20,6 @@ local MiscTab = Window:MakeTab({
     PremiumOnly = false
 })
 
--- Auto Story functionality
 local nameToNumber = {
     ["Itochi"] = 10,
     ["Roku Dark"] = 11,
@@ -109,14 +108,13 @@ local function autoStoryLoop()
                 end
             end
         end
-        wait(0)  -- Shorter wait to keep it responsive
+        wait(0)
     end
 end
 
 local function autoUpgradeLoop()
     while isAutoUpgradeActive do
         if unitsFolder then
-            -- Loop through all objects in the Units folder and send names to UnitEvent
             for _, item in pairs(unitsFolder:GetChildren()) do
                 local objectName = item.Name
                 local args = {"Upgrade", objectName}
@@ -128,10 +126,9 @@ local function autoUpgradeLoop()
                     warn("Error during upgrade: " .. errorMessage)
                 end
 
-                wait(0.1)  -- Optional delay between upgrades
+                wait(0.1)
             end
 
-            -- Trigger Upgrade Event after all names have been sent
             local upgradeEventArgs = {"UpgradeAll"}
             local success, errorMessage = pcall(function()
                 ReplicatedStorage.Networking.UnitEvent:FireServer(unpack(upgradeEventArgs))
@@ -143,7 +140,7 @@ local function autoUpgradeLoop()
         else
             print("Units folder not found in Workspace.")
         end
-        wait(1)  -- Wait before repeating the loop
+        wait(1)
     end
 end
 
@@ -193,7 +190,6 @@ GameplayTab:AddToggle({
     end
 })
 
--- Miscellaneous Buttons
 MiscTab:AddButton({
     Name = "Summonx10",
     Callback = function()
@@ -228,7 +224,6 @@ MiscTab:AddButton({
         local codes = {
             "400KLIKES", "100KLIKES", "200KLIKES", "300KLIKES",
             "10MVISITS", "25MVISITS", "10KLIKES", "RELEASE", "DELAY"
-            -- Add more codes as needed
         }
 
         local function fireCode(code)
@@ -242,4 +237,10 @@ MiscTab:AddButton({
             end
         end
 
-        for _, code in ipairs(codes)
+        for _, code in ipairs(codes) do
+            pcall(function()
+                fireCode(code)
+            end)
+        end
+    end    
+})
