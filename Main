@@ -216,7 +216,7 @@ GameplayTab:AddToggle({
         if isAutoReplayActive then
             spawn(function()
                 while isAutoReplayActive do
-                    local args = { [1] = "Replay" }
+                    local args = { [1] = "Retry" }
                     local success, errorMessage = pcall(function()
                         ReplicatedStorage.Networking.EndScreen.VoteEvent:FireServer(unpack(args))
                     end)
