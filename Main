@@ -42,6 +42,7 @@ local nameToNumber = {
     ["Grim Wow"] = 14,
     ["Agony"] = 15,
     ["Song Jinwu"] = 21,
+["Song Jinwu (Monarch)"] = 21:Evoled,
     ["Kokashi"] = 26,
     ["Genitsu"] = 27,
     ["Geno"] = 28,
