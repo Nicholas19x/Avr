@@ -42,7 +42,7 @@ local nameToNumber = {
     ["Grim Wow"] = 14,
     ["Agony"] = 15,
     ["Song Jinwu"] = 21,
-    ["Song Jinwu (Monarch)"] = 21:Evolved,
+    ["Song Jinwu (Monarch)"] = { number = 21, evolved = "Evolved" },
     ["Kokashi"] = 26,
     ["Genitsu"] = 27,
     ["Geno"] = 28,
@@ -64,6 +64,16 @@ local nameToNumber = {
     ["Sosuke"] = 44,
     ["Vogita"] = 45,
 }
+
+local function displayName(name)
+    local entry = nameToNumber[name]
+    if type(entry) == "table" then
+        return tostring(entry.number) .. ":" .. entry.evolved
+    else
+        return tostring(entry)
+    end
+end
+
 
 local VectorP = {
     Vector3.new(129.33424377441406, 8.935784339904785, 122.03530883789062),
